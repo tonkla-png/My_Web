@@ -1,0 +1,270 @@
+:root {
+  --ink: #1B2A2E;
+  --paper: #ECEFE9;
+  --paper-raised: #F7F8F4;
+  --gold: #B9922F;
+  --sage: #6E8C74;
+  --muted: #5B6660;
+  --line: rgba(27, 42, 46, 0.16);
+  --shadow: 0 30px 60px -25px rgba(27, 42, 46, 0.35);
+  --radius: 22px;
+  --font-display: "Fraunces", serif;
+  --font-body: "IBM Plex Sans Thai", sans-serif;
+  --font-mono: "Space Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(185, 146, 47, 0.10), transparent 40%),
+    radial-gradient(circle at 88% 92%, rgba(110, 140, 116, 0.14), transparent 45%),
+    var(--paper);
+  font-family: var(--font-body);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* subtle paper grain via layered noise-ish gradient lines */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(27, 42, 46, 0.015) 0px,
+    rgba(27, 42, 46, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.postmark {
+  position: absolute;
+  top: 36px;
+  right: 36px;
+  width: 92px;
+  height: 92px;
+  opacity: 0.85;
+  transform: rotate(-8deg);
+  animation: stamp-in 0.9s cubic-bezier(.2,.9,.25,1) both;
+  animation-delay: 0.35s;
+}
+
+.postmark svg { width: 100%; height: 100%; }
+.postmark-ring, .postmark-ring-inner, .postmark-line {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.4;
+}
+.postmark-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+  fill: var(--gold);
+}
+
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(-8deg) scale(1.6); }
+  60% { opacity: 0.9; }
+  100% { opacity: 0.85; transform: rotate(-8deg) scale(1); }
+}
+
+.card {
+  position: relative;
+  width: min(560px, 100%);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 56px 48px 40px;
+  animation: rise-in 0.7s cubic-bezier(.2,.9,.25,1) both;
+}
+
+@keyframes rise-in {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 20px;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--ink), #2E4448);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--paper-raised);
+  border: 3px solid var(--paper-raised);
+  outline: 1px solid var(--line);
+  box-shadow: 0 12px 24px -12px rgba(27,42,46,0.5);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 6vw, 42px);
+  text-align: center;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.role {
+  text-align: center;
+  margin: 0 auto 20px;
+  color: var(--sage);
+  font-weight: 500;
+  font-size: 15px;
+  max-width: 34ch;
+}
+
+.bio {
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 15px;
+  max-width: 42ch;
+  margin: 0 auto;
+}
+
+.divider {
+  border: none;
+  border-top: 1px dashed var(--line);
+  margin: 32px 0 28px;
+}
+
+.contacts { text-align: center; }
+
+.contacts-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.contact-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px 14px;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.contact-chip svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--ink);
+  color: var(--ink);
+  transition: stroke 0.22s ease, color 0.22s ease;
+}
+
+.contact-chip:hover,
+.contact-chip:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  background: var(--paper-raised);
+  box-shadow: 0 14px 22px -14px rgba(185,146,47,0.55);
+}
+
+.contact-chip:hover svg,
+.contact-chip:focus-visible svg {
+  stroke: var(--gold);
+  color: var(--gold);
+}
+
+.contact-chip:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.card-foot {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+  .card {
+    padding: 44px 22px 32px;
+    border-radius: 18px;
+  }
+
+  .postmark {
+    width: 64px;
+    height: 64px;
+    top: 20px;
+    right: 20px;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card-head {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postmark, .card {
+    animation: none;
+  }
+  .contact-chip {
+    transition: none;
+  }
+}
